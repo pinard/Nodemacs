@@ -1,4 +1,4 @@
 # Internal goals
 
-README: ~/fp/web/notes/Nodemacs.html
-	w3m -dump $^ > $@
+README.md: ~/fp/web/notes/Nodemacs.html
+	pandoc -o $@ $^
