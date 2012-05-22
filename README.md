@@ -4,8 +4,8 @@ Table des matières
 -   [1 README contents](#sec-1)
 -   [2 Informal notes](#sec-2)
     -   [2.1 Project initialization](#sec-2.1)
-    -   [2.2 Producing this README file](#sec-2.2)
-    -   [2.3 Bizarre methodology](#sec-2.3)
+    -   [2.2 Bizarre methodology](#sec-2.2)
+    -   [2.3 JavaScript requirements](#sec-2.3)
 
 1 README contents
 -----------------
@@ -59,31 +59,34 @@ While preparing the GitHub project, I checked the *Initialize this
 repository with a README* button and also set *Add .gitignore* to
 **Node**, to see how it goes.
 
-After cloning the repository locally, I notice a minimal **README.md**
-file, in [Markdown
-format](http://daringfireball.net/projects/markdown/). The generated
+After cloning the repository locally, I see that the generated
 **.gitignore** is missing a newline at end, which I add locally; I also
-report this tiny flaw to GitHub maintainers.
+report this tiny flaw to GitHub maintainers. It is common to me that
+generated files in various projects, a bit everywhere, are not always
+perfectly formatted. This is sad, as it is often the first contact or
+only examples newcomers have, showing proper habits for associated
+language or configuration.
 
-### 2.2 Producing this README file
-
-2012-05-08 mar I currently much enjoy Org format for handling my own
-notes, and do not feel like switching to Markdown for original sources.
-So, **README.md** gets derived automatically from the Org source.
-
-Some of my Org notes are private, and even for the public ones, there
-are **:noexport:** sections. Because of these private parts, I do not
-make my Org sources directly available. **Nodemacs.org** becomes [an
-HTML file](http://pinard.progiciels-bpi.ca/notes/Nodemacs.html) through
-the Org publishing feature, and that HTML file is later turned into a
-Markdown file using the impressive [Pandoc
-tool](http://johnmacfarlane.net/pandoc/). Should I say, Pandoc impressed
+I also notice a minimal **README.md** file, in [Markdown
+format](http://daringfireball.net/projects/markdown/). As I currently
+much enjoy Org format for handling my own notes and do not feel like
+switching to Markdown for original sources. Markdown has virtues, so I
+rather want **README.md** to get derived automatically from the Org
+source. The Org source itself is not available, the reason being that,
+for those Org notes of mine which are not private, there still are
+**:noexport:** sections, I find it easier to maintain this way. I first
+tried the generic Org exporter with some configuration towards Markdown;
+it did not work nicely enough. The
+[Pandoc](http://johnmacfarlane.net/pandoc/) route is much more
+successful, transforming the [HTML
+file](http://pinard.progiciels-bpi.ca/notes/Nodemacs.html) produced out
+of **Nodemacs.org** through the Org publishing feature. Pandoc impressed
 me. Climbing from generated HTML back to the structural intent is not a
-trivial job in my opinion. Not only Pandoc did it well, it was blazing
-fast at it. Moreover, as it is written in Haskell, it scratches on my
+trivial job in my opinion. Not only Pandoc did it well, but blazingly
+fast. Moreover, as it is written in Haskell, it scratches on my
 prejudice of Haskell being essentially an academical language!
 
-### 2.3 Bizarre methodology
+### 2.2 Bizarre methodology
 
 2012-05-08 mar In another message, I speak of bizarre methodology. At
 least for me, it is quite unusual not to having any contents to a
@@ -98,9 +101,96 @@ not start **that** empty. On the other hand, there is also my own
 character, prone to like *elegance* — whatever that means — and dislike
 blunt, so deep down, I already have something to defend…
 
+### 2.3 JavaScript requirements
+
+2012-05-17 jeu If the communication protocol in Nodemacs follows the
+same principle as in Pymacs, Emacs should generate JavaScript, and the
+Node helper should generate Lisp. I considered for a jiffie sticking
+with JSON overall, instead; JSON *is* JavaScript after all, and I expect
+that receiving JSON in Node is trivially fast. But I now think it is a
+bad idea:
+
+-   In Emacs, JSON interpreters just cannot compete with the speed of a
+    mere **eval**.
+-   In Node, JSON expressions are limited compared to *any* JavaScript,
+    and I do not see the relevance of chanelling a more complex
+    evaluation into JSON on the Emacs side, to be then interpreted on
+    the Node side after decoding, we lose both power and speed going the
+    JSON route. **eval** is just simpler and quicker.
+-   **eval** really is to avoided in usual programming, as much as we
+    can. Besides its inherent slowness, it often comes with various
+    security concerns. Nodemacs is exceptional in this regard. If Pymacs
+    principles correctly translate to Nodemacs: **eval** *is* the way to
+    speed as it uses the receiving end compiler, and the tool is meant
+    for a single user trusting himself.
+-   Unless we find some speedy, rock-solid communication tool between
+    Emacs and Node, we might be better off retaining full control over
+    the envelope of the transmission, into which the **eval**-able code
+    sits. I'm not sure what JSON buys us, here.
+-   While tempting, we should not embrace a technology like JSON merely
+    because it is in the fashion. We really need to understand what it
+    gives, and what it costs.
+
+That auto-trust bit, above, is debatable. One might say that a tool like
+Nodemacs should protect a user against himself (herself? itself?).
+First, the security concern is more against malign intent more casual
+errors, it does not apply here. Second, most of the protocol logic is
+kept at some distance from the user API, so I would guess that a
+bug-free Nodemacs has likely a protocol which is immune to user casual
+errors. A user sticking to the API, even with an erroneous program,
+cannot break the protocol.
+
+Memory management in Pymacs has been touchy, I presume Nodemacs would
+not be different. It will likely be more difficult. The problem is
+detecting on the Node side whenever an Emacs handle is about to be
+garbage collected. Objects are not freed in JavaScript as timely as they
+are freed on Python, and I have no idea if Node offers anything in the
+area of weak references. For the sake of memory management, Nodemacs
+likely needs to trigger on the Node side some administration code at
+regular time intervals. Even if this gets solved, some code would be
+needed to interrupt that management if we ever need Nodemacs to
+terminate gracefully, as Node only exits once all pending events have
+been exhausted.
+
+Node is an evolving beast, and Nodemacs likely to autoconfigure itself
+to whatever facilities are available depending on the installed Node
+version. With some luck, this should not be overly difficult, but I do
+not really know. I hope the underlying JavaScript does not evolve as
+drastically as Python2 going to Python3, so a pre-processor never gets
+required for Nodemacs.
+
+Presumably that Node has everything one needs for precisely controlling
+its input and output contents, encoding, and flushing. It's easier for
+development when the protocol goes through standard input and output,
+any socket would do otherwise.
+
+Programming error management is also an issue to resolve, as far as I am
+concerned. I need awareness on all possible errors on the JavaScript
+side, how to trap them, how to get information about them for later
+transmission on the Emacs side, how unstacking precisely occurs,
+whatever it means. One problem is that stacks are replaced by kind of
+eventful, asynchronous behaviour on the Node side, and ways are needed
+to correctly relate these to the stricter stack orientation on the Emacs
+side. As I write, this is all pretty nebulous.
+
+The Nodemacs API is likely going to be inspired by the Pymacs API, of
+course, and I did not give it much thought yet. A few things quickly
+come to mind however:
+
+-   The argument passing facilities in Python appear richer to me than
+    the JavaScript equivalent, I'm not sure if and how elegance might be
+    recovered. Hopefully, there are some nice and common JavaScript
+    idioms that I merely need to discover!
+-   JavaScript seems to be just as interesting as Python when it comes
+    to decorating functions with attributes, which are needed to declare
+    *interactive* properties on the Emacs side, for example.
+-   Rich Python objects, as the **lisp** one, allow for fairly succinct
+    writing, I hope that there are JavaScript ways which are just as
+    economical.
+
 Auteur: François Pinard
 [<pinard@progiciels-bpi.ca\>](mailto:pinard@progiciels-bpi.ca)
 
-Date: 2012-05-10 10:25:55 EDT
+Date: 2012-05-17 13:00:16 EDT
 
 HTML generated by org-mode 6.33x in emacs 23
