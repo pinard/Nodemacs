@@ -19,8 +19,7 @@ I expect this to be a humbling path to development: my weaknesses, hesitations, 
 
 * Informal notes
 ** Project initialization
-# <<2012-05-08>>
-[2012-05-08 mar] This is the first time ever that I fully initialize my own copy of a new project from GitHub, without having it locally first.  While preparing the GitHub project, I checked the /Initialize this repository with a README/ button and also set /Add .gitignore/ to *Node*, to see how it goes.
+<<2012-05-08>> [2012-05-08 mar] This is the first time ever that I fully initialize my own copy of a new project from GitHub, without having it locally first.  While preparing the GitHub project, I checked the /Initialize this repository with a README/ button and also set /Add .gitignore/ to *Node*, to see how it goes.
 
 After cloning the repository locally, I see that the generated *.gitignore* is missing a newline at end, which I add locally; I also report this tiny flaw to GitHub maintainers.  It is common to me that generated files in various projects, a bit everywhere, are not always perfectly formatted.  This is sad, as it is often the first contact or only examples newcomers have, showing proper habits for associated language or configuration.
 
@@ -29,13 +28,11 @@ I also notice a minimal *README.md* file, in [[http://daringfireball.net/project
 
 [fn:1] Pandoc impressed me.  Climbing from generated HTML back to the structural intent is not a trivial job in my opinion.  Not only Pandoc did it well, but blazingly fast.  Moreover, as it is written in Haskell, it scratches on my prejudice of Haskell being essentially an academical language!  (Before Pandoc,   I also tried the Org generic exporter with Markdown parametrization, which did not produce a usable enough result.)
 ** Bizarre methodology
-# <<2012-05-08>>
-[2012-05-08 mar] In another message, I speak of bizarre methodology.  At least for me, it is quite unusual not to having any contents to a project, and developing an analysis from scratch in public, rather than privately.  The strange idea is to put myself under the possible fire of critics, before feeling solid on anything, before having something to defend.
+<<2012-05-08>> [2012-05-08 mar] In another message, I speak of bizarre methodology.  At least for me, it is quite unusual not to having any contents to a project, and developing an analysis from scratch in public, rather than privately.  The strange idea is to put myself under the possible fire of critics, before feeling solid on anything, before having something to defend.
 
 Well, thinking a bit more about this, it might not be entirely true.  One one hand, this new project has another project as a model, so it does not start *that* empty.  On the other hand, there is also my own character, prone to like /elegance/ — whatever that means — and dislike blunt, so deep down, I already have something to defend…
 ** JavaScript requirements
-# <<2012-05-17>>
-[2012-05-17 jeu] If the communication protocol in Nodemacs follows the same principle as in Pymacs, Emacs should generate JavaScript, and the Node helper should generate Lisp.  I considered for a jiffie sticking with JSON overall, instead; JSON /is/ JavaScript after all, and I expect that receiving JSON in Node is trivially fast.  But I now think it is a bad idea:
+<<2012-05-17>> [2012-05-17 jeu] If the communication protocol in Nodemacs follows the same principle as in Pymacs, Emacs should generate JavaScript, and the Node helper should generate Lisp.  I considered for a jiffie sticking with JSON overall, instead; JSON /is/ JavaScript after all, and I expect that receiving JSON in Node is trivially fast.  But I now think it is a bad idea:
 
 - In Emacs, JSON interpreters just cannot compete with the speed of a mere *eval*.
 - In Node, JSON expressions are limited compared to /any/ JavaScript, and I do not see the relevance of chanelling a more complex evaluation into JSON on the Emacs side, to be then interpreted on the Node side after decoding, we lose both power and speed going the JSON route.  *eval* is just simpler and quicker.
