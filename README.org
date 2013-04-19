@@ -1,7 +1,5 @@
 #+TITLE: Nodemacs — Notes
 #+OPTIONS: H:2 tic:t
-#+SETUPFILE: ~/fp/notes/setup/nodemacs.org
-#+INCLUDE: ~/fp/notes/setup/jqindex.org
 * README contents
 
 Nodemacs is essentially a wild experiment.
