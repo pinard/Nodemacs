@@ -4,53 +4,184 @@
 
 Nodemacs is essentially a wild experiment.
 
-Its /official/ goal is to duplicate the [[http://pinard.progiciels-bpi.ca/org/Pymacs.html][Pymacs project]], replacing Python by JavaScript in the process.  Briefly said, the resulting tool, once started from Emacs, should allow both-way communication between Emacs Lisp and JavaScript.
+Its /official/ goal is to duplicate the [[http://pinard.progiciels-bpi.ca/org/Pymacs.html][Pymacs project]], replacing Python
+by JavaScript in the process.  Briefly said, the resulting tool, once
+started from Emacs, should allow both-way communication between Emacs
+Lisp and JavaScript.
 
 The /real/ goal is to experiment in two areas:
 
-- First, I just do not write enough JavaScript, while I would like to deepen my mastering of it.  My job duties have never been much on this side so far.  A good while ago, I switched to Node for serving most of my Web sites, as a way to get more frequent contacts with JavaScript through required maintenance.  But the sad truth (!) is that it worked so well, and so quickly, that I was never pulled into maintenance afterwards.  I guess that developing Nodemacs, and using it routinely once it exists, would have better success at establishing regular contacts with JavaScript.
+- First, I just do not write enough JavaScript, while I would like to
+  deepen my mastering of it.  My job duties have never been much on
+  this side so far.  A good while ago, I switched to Node for serving
+  most of my Web sites, as a way to get more frequent contacts with
+  JavaScript through required maintenance.  But the sad truth (!) is
+  that it worked so well, and so quickly, that I was never pulled into
+  maintenance afterwards.  I guess that developing Nodemacs, and using
+  it routinely once it exists, would have better success at
+  establishing regular contacts with JavaScript.
 
-- Second, all projects I have published so far had a fair amount of written code, or detailed specifications at least, before I push them out in the crowd, so the public drive and direction has always well established from the start.  Nodemacs escapes this pattern in that it has no code, and not even an analysis, before I put it out.  Moreover, while likely, I am not even sure at this stage that it would be usable enough to be useful.  So, I intend to develop this project on the public place from its real start, instead of having a private initial phase.
+- Second, all projects I have published so far had a fair amount of
+  written code, or detailed specifications at least, before I push
+  them out in the crowd, so the public drive and direction has always
+  well established from the start.  Nodemacs escapes this pattern in
+  that it has no code, and not even an analysis, before I put it out.
+  Moreover, while likely, I am not even sure at this stage that it
+  would be usable enough to be useful.  So, I intend to develop this
+  project on the public place from its real start, instead of having a
+  private initial phase.
 
-I expect this to be a humbling path to development: my weaknesses, hesitations, and wanderings are quite exposed to anybody following the project.  There is the danger of the project being taken over by anyone disagreeing with the development direction or pace. Years ago, I've been hurt in the GNU Music project, where Robert Strandh successfully lobbied Richard Stallman for acquiring the lead, and our whole setup.  One-way forking may indeed occur on GitHub, but I guess I could swallow it more easily.  So I'm risking it!
+I expect this to be a humbling path to development: my weaknesses,
+hesitations, and wanderings are quite exposed to anybody following the
+project.  There is the danger of the project being taken over by
+anyone disagreeing with the development direction or pace. Years ago,
+I've been hurt in the GNU Music project, where Robert Strandh
+successfully lobbied Richard Stallman for acquiring the lead, and our
+whole setup.  One-way forking may indeed occur on GitHub, but I guess
+I could swallow it more easily.  So I'm risking it!
 
 * Informal notes
+
 ** Project initialization
-<<2012-05-08>> [2012-05-08 mar] This is the first time ever that I fully initialize my own copy of a new project from GitHub, without having it locally first.  While preparing the GitHub project, I checked the /Initialize this repository with a README/ button and also set /Add .gitignore/ to *Node*, to see how it goes.
 
-After cloning the repository locally, I see that the generated *.gitignore* is missing a newline at end, which I add locally; I also report this tiny flaw to GitHub maintainers.  It is common to me that generated files in various projects, a bit everywhere, are not always perfectly formatted.  This is sad, as it is often the first contact or only examples newcomers have, showing proper habits for associated language or configuration.
+<<2012-05-08>> [2012-05-08 mar] This is the first time ever that I
+fully initialize my own copy of a new project from GitHub, without
+having it locally first.  While preparing the GitHub project, I
+checked the /Initialize this repository with a README/ button and also
+set /Add .gitignore/ to *Node*, to see how it goes.
 
-I also notice a minimal *README.md* file, in [[http://daringfireball.net/projects/markdown/][Markdown format]].  As I currently much enjoy Org format for hpandling my own notes and do not feel like switching to Markdown for original sources.  Markdown has virtues, so I rather want *README.md* to get derived automatically from the Org source.  The original Org source itself is not available, the reason being that, for those Org notes of mine which are not private, there still are *:noexport:* sections, I find it easier to maintain this way.  I first tried the generic Org exporter with some configuration towards Markdown; it did not work nicely enough.  I then tried =w3m -dump=, which yielded something a little too flat for my taste.  The [[http://johnmacfarlane.net/pandoc/][Pandoc]] route was much more successful[fn:1], transforming the [[http://pinard.progiciels-bpi.ca/org/Nodemacs.html][HTML file]] produced out of
-*Nodemacs.org* through the Org publishing feature.  But it seems that GitHub directly supports *README.org* files, better and simpler.  I merely had to write a small program able to remove the private parts first.
+After cloning the repository locally, I see that the generated
+*.gitignore* is missing a newline at end, which I add locally; I also
+report this tiny flaw to GitHub maintainers.  It is common to me that
+generated files in various projects, a bit everywhere, are not always
+perfectly formatted.  This is sad, as it is often the first contact or
+only examples newcomers have, showing proper habits for associated
+language or configuration.
 
-[fn:1] Pandoc impressed me.  Climbing from generated HTML back to the structural intent is not a trivial job in my opinion.  Not only Pandoc did it well, but blazingly fast.  Moreover, as it is written in Haskell, it scratches on my prejudice of Haskell being essentially an academical language!  (Before Pandoc,   I also tried the Org generic exporter with Markdown parametrization, which did not produce a usable enough result.)
+I also notice a minimal *README.md* file, in [[http://daringfireball.net/projects/markdown/][Markdown format]].  As I
+currently much enjoy Org format for hpandling my own notes and do not
+feel like switching to Markdown for original sources.  Markdown has
+virtues, so I rather want *README.md* to get derived automatically from
+the Org source.  The original Org source itself is not available, the
+reason being that, for those Org notes of mine which are not private,
+there still are *:noexport:* sections, I find it easier to maintain this
+way.  I first tried the generic Org exporter with some configuration
+towards Markdown; it did not work nicely enough.  I then tried =w3m
+-dump=, which yielded something a little too flat for my taste.  The
+[[http://johnmacfarlane.net/pandoc/][Pandoc]] route was much more successful[fn:1], transforming the [[http://pinard.progiciels-bpi.ca/org/Nodemacs.html][HTML
+file]] produced out of *Nodemacs.org* through the Org publishing feature.
+But it seems that GitHub directly supports *README.org* files, better
+and simpler.  I merely had to write a small program able to remove the
+private parts first.
+
+[fn:1] Pandoc impressed me.  Climbing from generated HTML back to the
+structural intent is not a trivial job in my opinion.  Not only Pandoc
+did it well, but blazingly fast.  Moreover, as it is written in
+Haskell, it scratches on my prejudice of Haskell being essentially an
+academical language!  (Before Pandoc, I also tried the Org generic
+exporter with Markdown parametrization, which did not produce a usable
+enough result.)
+
 ** Bizarre methodology
-<<2012-05-08>> [2012-05-08 mar] In another message, I speak of bizarre methodology.  At least for me, it is quite unusual not to having any contents to a project, and developing an analysis from scratch in public, rather than privately.  The strange idea is to put myself under the possible fire of critics, before feeling solid on anything, before having something to defend.
 
-Well, thinking a bit more about this, it might not be entirely true.  One one hand, this new project has another project as a model, so it does not start *that* empty.  On the other hand, there is also my own character, prone to like /elegance/ — whatever that means — and dislike blunt, so deep down, I already have something to defend…
+<<2012-05-08>> [2012-05-08 mar] In another message, I speak of bizarre
+methodology.  At least for me, it is quite unusual not to having any
+contents to a project, and developing an analysis from scratch in
+public, rather than privately.  The strange idea is to put myself
+under the possible fire of critics, before feeling solid on anything,
+before having something to defend.
+
+Well, thinking a bit more about this, it might not be entirely true.
+One one hand, this new project has another project as a model, so it
+does not start *that* empty.  On the other hand, there is also my own
+character, prone to like /elegance/ — whatever that means — and dislike
+blunt, so deep down, I already have something to defend…
+
 ** JavaScript requirements
-<<2012-05-17>> [2012-05-17 jeu] If the communication protocol in Nodemacs follows the same principle as in Pymacs, Emacs should generate JavaScript, and the Node helper should generate Lisp.  I considered for a jiffie sticking with JSON overall, instead; JSON /is/ JavaScript after all, and I expect that receiving JSON in Node is trivially fast.  But I now think it is a bad idea:
 
-- In Emacs, JSON interpreters just cannot compete with the speed of a mere *eval*.
-- In Node, JSON expressions are limited compared to /any/ JavaScript, and I do not see the relevance of chanelling a more complex evaluation into JSON on the Emacs side, to be then interpreted on the Node side after decoding, we lose both power and speed going the JSON route.  *eval* is just simpler and quicker.
-- *eval* really is to avoided in usual programming, as much as we can.  Besides its inherent slowness, it often comes with various security concerns.  Nodemacs is exceptional in this regard.  If Pymacs principles correctly translate to Nodemacs: *eval* /is/ the way to speed as it uses the receiving end compiler, and the tool is meant for a single user trusting himself.
-- Unless we find some speedy, rock-solid communication tool between Emacs and Node, we might be better off retaining full control over the envelope of the transmission, into which the *eval*-able code sits.  I'm not sure what JSON buys us, here.
-- While tempting, we should not embrace a technology like JSON merely because it is in the fashion.  We really need to understand what it gives, and what it costs.
+<<2012-05-17>> [2012-05-17 jeu] If the communication protocol in
+Nodemacs follows the same principle as in Pymacs, Emacs should
+generate JavaScript, and the Node helper should generate Lisp.  I
+considered for a jiffie sticking with JSON overall, instead; JSON /is/
+JavaScript after all, and I expect that receiving JSON in Node is
+trivially fast.  But I now think it is a bad idea:
 
-That auto-trust bit, above, is debatable.  One might say that a tool like Nodemacs should protect a user against himself (herself? itself?).  First, the security concern is more against malign intent more casual errors, it does not apply here.  Second, most of the protocol logic is kept at some distance from the user API, so I would guess that a bug-free Nodemacs has likely a protocol which is immune to user casual errors.  A user sticking to the API, even with an erroneous program, cannot break the protocol.
+- In Emacs, JSON interpreters just cannot compete with the speed of a
+  mere *eval*.
+- In Node, JSON expressions are limited compared to /any/ JavaScript,
+  and I do not see the relevance of chanelling a more complex
+  evaluation into JSON on the Emacs side, to be then interpreted on
+  the Node side after decoding, we lose both power and speed going the
+  JSON route.  *eval* is just simpler and quicker.
+- *eval* really is to avoided in usual programming, as much as we can.
+  Besides its inherent slowness, it often comes with various security
+  concerns.  Nodemacs is exceptional in this regard.  If Pymacs
+  principles correctly translate to Nodemacs: *eval* /is/ the way to speed
+  as it uses the receiving end compiler, and the tool is meant for a
+  single user trusting himself.
+- Unless we find some speedy, rock-solid communication tool between
+  Emacs and Node, we might be better off retaining full control over
+  the envelope of the transmission, into which the *eval*-able code
+  sits.  I'm not sure what JSON buys us, here.
+- While tempting, we should not embrace a technology like JSON merely
+  because it is in the fashion.  We really need to understand what it
+  gives, and what it costs.
 
-Memory management in Pymacs has been touchy, I presume Nodemacs would not be different.  It will likely be more difficult.  The problem is detecting on the Node side whenever an Emacs handle is about to be garbage collected.  Objects are not freed in JavaScript as timely as they are freed on Python, and I have no idea if Node offers anything in the area of weak references.  For the sake of memory management, Nodemacs likely needs to trigger on the Node side some administration code at regular time intervals.  Even if this gets solved, some code would be needed to interrupt that management if we ever need Nodemacs to terminate gracefully, as Node only exits once all pending events have been exhausted.
+That auto-trust bit, above, is debatable.  One might say that a tool
+like Nodemacs should protect a user against himself (herself?
+itself?).  First, the security concern is more against malign intent
+more casual errors, it does not apply here.  Second, most of the
+protocol logic is kept at some distance from the user API, so I would
+guess that a bug-free Nodemacs has likely a protocol which is immune
+to user casual errors.  A user sticking to the API, even with an
+erroneous program, cannot break the protocol.
 
-Node is an evolving beast, and Nodemacs likely to autoconfigure itself to whatever facilities are available depending on the installed Node version.  With some luck, this should not be overly difficult, but I do not really know.  I hope the underlying JavaScript does not evolve as drastically as Python2 going to Python3, so a pre-processor never gets required for Nodemacs.
+Memory management in Pymacs has been touchy, I presume Nodemacs would
+not be different.  It will likely be more difficult.  The problem is
+detecting on the Node side whenever an Emacs handle is about to be
+garbage collected.  Objects are not freed in JavaScript as timely as
+they are freed on Python, and I have no idea if Node offers anything
+in the area of weak references.  For the sake of memory management,
+Nodemacs likely needs to trigger on the Node side some administration
+code at regular time intervals.  Even if this gets solved, some code
+would be needed to interrupt that management if we ever need Nodemacs
+to terminate gracefully, as Node only exits once all pending events
+have been exhausted.
 
-Presumably that Node has everything one needs for precisely controlling its input and output contents, encoding, and flushing.  It's easier for development when the protocol goes through standard input and output, any socket would do otherwise.
+Node is an evolving beast, and Nodemacs likely to autoconfigure itself
+to whatever facilities are available depending on the installed Node
+version.  With some luck, this should not be overly difficult, but I
+do not really know.  I hope the underlying JavaScript does not evolve
+as drastically as Python2 going to Python3, so a pre-processor never
+gets required for Nodemacs.
 
-Programming error management is also an issue to resolve, as far as I am concerned.  I need awareness on all possible errors on the JavaScript side, how to trap them, how to get information about them for later transmission on the Emacs side, how unstacking precisely occurs, whatever it means.  One problem is that stacks are replaced by kind of eventful, asynchronous behaviour on the Node side, and ways are needed to correctly relate these to the stricter stack orientation on the Emacs side.  As I write, this is all pretty nebulous.
+Presumably that Node has everything one needs for precisely
+controlling its input and output contents, encoding, and flushing.
+It's easier for development when the protocol goes through standard
+input and output, any socket would do otherwise.
 
-The Nodemacs API is likely going to be inspired by the Pymacs API, of course, and I did not give it much thought yet.  A few things quickly come to mind however:
+Programming error management is also an issue to resolve, as far as I
+am concerned.  I need awareness on all possible errors on the
+JavaScript side, how to trap them, how to get information about them
+for later transmission on the Emacs side, how unstacking precisely
+occurs, whatever it means.  One problem is that stacks are replaced by
+kind of eventful, asynchronous behaviour on the Node side, and ways
+are needed to correctly relate these to the stricter stack orientation
+on the Emacs side.  As I write, this is all pretty nebulous.
 
-- The argument passing facilities in Python appear richer to me than the JavaScript equivalent, I'm not sure if and how elegance might be recovered.  Hopefully, there are some nice and common JavaScript idioms that I merely need to discover!
+The Nodemacs API is likely going to be inspired by the Pymacs API, of
+course, and I did not give it much thought yet.  A few things quickly
+come to mind however:
 
-- JavaScript seems to be just as interesting as Python when it comes to decorating functions with attributes, which are needed to declare /interactive/ properties on the Emacs side, for example.
+- The argument passing facilities in Python appear richer to me than
+  the JavaScript equivalent, I'm not sure if and how elegance might be
+  recovered.  Hopefully, there are some nice and common JavaScript
+  idioms that I merely need to discover!
 
-- Rich Python objects, as the *lisp* one, allow for fairly succinct writing,  I hope that there are JavaScript ways which are just as economical.
+- JavaScript seems to be just as interesting as Python when it comes
+  to decorating functions with attributes, which are needed to declare
+  /interactive/ properties on the Emacs side, for example.
+
+- Rich Python objects, as the *lisp* one, allow for fairly succinct
+  writing, I hope that there are JavaScript ways which are just as
+  economical.
