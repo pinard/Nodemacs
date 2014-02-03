@@ -4,7 +4,7 @@
 
 Nodemacs is essentially a wild experiment.
 
-Its /official/ goal is to duplicate the [[http://pinard.progiciels-bpi.ca/org/Pymacs.html][Pymacs project]], replacing Python
+Its /official/ goal is to duplicate the [[http://pinard.progiciels-bpi.ca/notes/Pymacs.html][Pymacs project]], replacing Python
 by JavaScript in the process.  Briefly said, the resulting tool, once
 started from Emacs, should allow both-way communication between Emacs
 Lisp and JavaScript.
@@ -68,7 +68,7 @@ there still are *:noexport:* sections, I find it easier to maintain this
 way.  I first tried the generic Org exporter with some configuration
 towards Markdown; it did not work nicely enough.  I then tried =w3m
 -dump=, which yielded something a little too flat for my taste.  The
-[[http://johnmacfarlane.net/pandoc/][Pandoc]] route was much more successful[fn:1], transforming the [[http://pinard.progiciels-bpi.ca/org/Nodemacs.html][HTML
+[[http://johnmacfarlane.net/pandoc/][Pandoc]] route was much more successful[fn:1], transforming the [[http://pinard.progiciels-bpi.ca/notes/Nodemacs.html][HTML
 file]] produced out of *Nodemacs.org* through the Org publishing feature.
 But it seems that GitHub directly supports *README.org* files, better
 and simpler.  I merely had to write a small program able to remove the
